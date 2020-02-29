@@ -1,4 +1,8 @@
 My apologize for messy code
+![cv-builder](https://user-images.githubusercontent.com/46282880/75601707-bbf4e700-5af8-11ea-80e3-a4535c3e10ec.PNG)
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
