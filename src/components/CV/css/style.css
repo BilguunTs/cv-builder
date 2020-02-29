@@ -1,0 +1,20 @@
+section-container {
+  transform: scale(1.1);
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 1px;
+  width: calc(100% + 40px);
+  transition: all 0.2s ease-in-out;
+}
+block-container {
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: aqua;
+}
+
+block-container:hover {
+  transform: scale(1.1);
+}
+.placehoder {
+  opacity: 0.6;
+}

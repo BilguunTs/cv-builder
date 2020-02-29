@@ -1,0 +1,4 @@
+.transparent {
+  background: beige;
+  backdrop-filter: blur(8px);
+}
