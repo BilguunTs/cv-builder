@@ -5,7 +5,7 @@ import {
   Position,
   Button,
   Icon,
-  PanelStack
+  PanelStack,
 } from "@blueprintjs/core";
 import { block_types } from "../../Context/config";
 import WorkHistoryForm from "../CV/BlockForms/workhistoryform";
@@ -16,7 +16,7 @@ import ContactForm from "../CV/BlockForms/contactform";
 import { RenderIcon } from "../Icons/RenderIcon";
 import "../../slide.css";
 class SideDrawer extends Component {
-  RenderInputform = args => {
+  RenderInputform = (args) => {
     if (args === null) return;
     switch (args.blockType) {
       case block_types.main.Work_History:
@@ -58,11 +58,11 @@ class SideDrawer extends Component {
           <div className={Classes.DIALOG_BODY}>
             {this.RenderInputform(targetBlock)}
 
-            <div className={Classes.DIALOG_FOOTER}>
+            {/*   <div className={Classes.DIALOG_FOOTER}>
               <div className={Classes.DIALOG_FOOTER_ACTIONS}>
                 {targetBlock === null ? null : <button>save</button>}
               </div>
-            </div>
+            </div>*/}
           </div>
         </div>
       </div>
