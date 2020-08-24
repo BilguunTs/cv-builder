@@ -5,7 +5,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import Drawer from "./components/Drawer";
 import "./slide.css";
 import { Card } from "@blueprintjs/core";
-import PDFconverter from "./PDFconvert";
+//import PDFconverter from "./PDFconvert";
 import G_Dialog from "./Context/Global_Dialog";
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class App extends React.Component {
       <>
         <ContextWrapper>
           <Contextulize.Consumer>
-            {store => (
+            {(store) => (
               <DragDropContext
                 //   onDragStart={store.onDragStart.bind(this)}
                 onDragEnd={store.onDragEnd.bind(this)}
@@ -26,7 +26,6 @@ class App extends React.Component {
                 <>
                   <G_Dialog {...store} />
                   <Main {...store} />
-
                   <div style={{ overflow: "hidden" }}>
                     <Card
                       className={
@@ -44,7 +43,7 @@ class App extends React.Component {
                         overflowY: "auto",
                         padding: 0,
                         boxShadow:
-                          "0 0 0 1px rgba(16,22,26,.1),0 1px 1px rgba(16,22,26,.2),0 2px 6px rgba(16,22,26,.2)"
+                          "0 0 0 1px rgba(16,22,26,.1),0 1px 1px rgba(16,22,26,.2),0 2px 6px rgba(16,22,26,.2)",
                       }}
                     >
                       <Drawer {...store} />

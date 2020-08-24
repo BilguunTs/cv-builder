@@ -15,18 +15,18 @@ export class ContextWrapper extends React.Component {
         toast: {
           isOpen: false,
           content: null,
-          type: null
+          type: null,
         },
         callout: {
           isOpen: false,
           content: null,
-          type: null
+          type: null,
         },
         effect: {
           isOn: false,
           type: null,
-          duration: null
-        }
+          duration: null,
+        },
       },
       dialog: {
         isOpen: false,
@@ -34,14 +34,14 @@ export class ContextWrapper extends React.Component {
         header: undefined,
         body: undefined,
         action: undefined,
-        targetEl: null
+        targetEl: null,
       },
       blocks: [],
       existing_section_types: [],
       targetBlock: null,
       isPreviewOpen: false,
       sidedrawer: {
-        isOpen: false
+        isOpen: false,
       },
       heading: null,
       summary: null,
@@ -61,9 +61,9 @@ export class ContextWrapper extends React.Component {
                 schoollocation: "",
                 startDate: "",
                 endDate: "",
-                description: ""
-              }
-            ]
+                description: "",
+              },
+            ],
           },
           {
             id: "1",
@@ -79,11 +79,11 @@ export class ContextWrapper extends React.Component {
                 state: "",
                 startDate: "",
                 endDate: "",
-                workdetail: ""
-              }
-            ]
-          }
-        ]
+                workdetail: "",
+              },
+            ],
+          },
+        ],
       },
       rightCollumn: {
         id: "R",
@@ -104,9 +104,9 @@ export class ContextWrapper extends React.Component {
                 zipcode: "12304",
                 phone: "99424149",
                 email: "BillKill@example.com",
-                social_links: ""
-              }
-            ]
+                social_links: "",
+              },
+            ],
           },
           {
             id: "2",
@@ -114,8 +114,8 @@ export class ContextWrapper extends React.Component {
             type: block_types.main.Skills,
             blocks: [
               { id: "_3hi6", value: 5, name: "Team management" },
-              { id: "f_hi7", value: 2, name: "Document management" }
-            ]
+              { id: "f_hi7", value: 2, name: "Document management" },
+            ],
           },
           {
             id: "3",
@@ -123,12 +123,12 @@ export class ContextWrapper extends React.Component {
             type: block_types.additional.language,
             blocks: [
               { id: "h_3t1", value: 5, name: "English" },
-              { id: "h_4x1", value: 5, name: "Japaneses" }
-            ]
-          }
-        ]
+              { id: "h_4x1", value: 5, name: "Japaneses" },
+            ],
+          },
+        ],
       },
-      focusedElement: null
+      focusedElement: null,
     };
   }
   componentDidMount() {
@@ -136,9 +136,9 @@ export class ContextWrapper extends React.Component {
       let array = Array.from(
         [
           ...this.state.rightCollumn.sections,
-          ...this.state.leftCollumn.sections
+          ...this.state.leftCollumn.sections,
         ],
-        s => s.type
+        (s) => s.type
       );
       this.setState({ existing_section_types: array });
     }
@@ -147,20 +147,20 @@ export class ContextWrapper extends React.Component {
   /**
    * @public methods
    */
-  edit_header = text => {
+  edit_header = (text) => {
     this.state.heading = text;
   };
-  edit_summary = text => {
+  edit_summary = (text) => {
     this.state.summary = text;
   };
-  openDialog = obj => {
+  openDialog = (obj) => {
     let dialog = Object.assign(config.dialog, { ...obj, isOpen: true });
     this.setState({ dialog: dialog });
   };
   closeDialog = () => {
     this.setState({ dialog: { isOpen: false } });
   };
-  setTargetBlock = obj => {
+  setTargetBlock = (obj) => {
     let target = {};
     const {
       column,
@@ -168,7 +168,7 @@ export class ContextWrapper extends React.Component {
       blockIndex,
       blockType,
       id,
-      sectiontitle
+      sectiontitle,
     } = obj;
     if (this.state.targetBlock !== null && id === this.state.targetBlock.id) {
       return;
@@ -193,7 +193,7 @@ export class ContextWrapper extends React.Component {
     );
     this.setState({
       ...this.state,
-      targetBlock: update(this.state.targetBlock, { $set: newTarget })
+      targetBlock: update(this.state.targetBlock, { $set: newTarget }),
     });
   };
 
@@ -238,8 +238,8 @@ export class ContextWrapper extends React.Component {
           this.setState({
             ...this.state,
             leftCollumn: update(this.state.leftCollumn, {
-              sections: { $set: newArray }
-            })
+              sections: { $set: newArray },
+            }),
           });
         } else if (result.source.droppableId === "R") {
           let newArray = array_move(
@@ -251,38 +251,38 @@ export class ContextWrapper extends React.Component {
           this.setState({
             ...this.state,
             rightCollumn: update(this.state.rightCollumn, {
-              sections: { $set: newArray }
-            })
+              sections: { $set: newArray },
+            }),
           });
         }
       } else {
         if (result.source.droppableId === "L") {
           const target = this.state.leftCollumn.sections.find(
-            i => i.id === result.draggableId
+            (i) => i.id === result.draggableId
           );
           this._update_targetBlock(result.destination);
           this.setState({
             ...this.state,
             leftCollumn: update(this.state.leftCollumn, {
-              sections: { $splice: [[result.source.index, 1]] }
+              sections: { $splice: [[result.source.index, 1]] },
             }),
             rightCollumn: update(this.state.rightCollumn, {
-              sections: { $splice: [[result.destination.index, 0, target]] }
-            })
+              sections: { $splice: [[result.destination.index, 0, target]] },
+            }),
           });
         } else {
           const target = this.state.rightCollumn.sections.find(
-            i => i.id === result.draggableId
+            (i) => i.id === result.draggableId
           );
           this._update_targetBlock(result.destination);
           this.setState({
             ...this.state,
             rightCollumn: update(this.state.rightCollumn, {
-              sections: { $splice: [[result.source.index, 1]] }
+              sections: { $splice: [[result.source.index, 1]] },
             }),
             leftCollumn: update(this.state.leftCollumn, {
-              sections: { $splice: [[result.destination.index, 0, target]] }
-            })
+              sections: { $splice: [[result.destination.index, 0, target]] },
+            }),
           });
         }
       }
@@ -300,7 +300,7 @@ export class ContextWrapper extends React.Component {
     }
     //  return this.Off_GlobalDrag();
   }
-  check = type => {
+  check = (type) => {
     for (let i = 0; i <= this.state.existing_section_types.length; i++) {
       console.log(this.state.existing_section_types[i] === type);
       if (this.state.existing_section_types[i] === type) {
@@ -316,69 +316,73 @@ export class ContextWrapper extends React.Component {
       this.setState({
         ...this.state,
         rightCollumn: update(this.state.rightCollumn, {
-          sections: { [index]: { title: { $set: newTitle } } }
-        })
+          sections: { [index]: { title: { $set: newTitle } } },
+        }),
       });
     } else {
       this.setState({
         ...this.state,
         leftCollumn: update(this.state.leftCollumn, {
-          sections: { [index]: { title: { $set: newTitle } } }
-        })
+          sections: { [index]: { title: { $set: newTitle } } },
+        }),
       });
       //return (this.state.leftCollumn.sections[index].title = newTitle);
     }
   }
   create_section = (type, title, column) => {
-    // console.log(this._isSectionAlreadyExists(type));
     if (this.check(type) === true) {
       return;
     } else {
+      console.log(this.state.snippets);
       const instance = this._init_Section(type, title);
-
       if (column !== undefined && column !== null) {
         switch (column) {
           case "R":
-            console.log("pushing to right");
             this.setState({
               ...this.state,
               snippets: {
+                ...this.state.snippets,
                 toast: {
                   isOpen: true,
                   content: "new section has been added",
-                  type: "SUCCESS"
-                }
+                  type: "SUCCESS",
+                },
               },
               existing_section_types: update(
                 this.state.existing_section_types,
                 { $push: [type] }
               ),
               rightCollumn: update(this.state.rightCollumn, {
-                sections: { $push: [instance] }
-              })
+                sections: { $push: [instance] },
+              }),
             });
 
           default:
             this.setState({
               ...this.state,
               snippets: {
+                ...this.state.snippets,
                 toast: {
                   isOpen: true,
                   content: "new section has been added",
-                  type: "SUCCESS"
-                }
+                  type: "SUCCESS",
+                },
               },
               existing_section_types: update(
                 this.state.existing_section_types,
                 { $push: [type] }
               ),
               leftCollumn: update(this.state.leftCollumn, {
-                sections: { $push: [instance] }
-              })
+                sections: { $push: [instance] },
+              }),
             });
         }
         setTimeout(() => {
-          return (this.state.snippets.toast.isOpen = false);
+          this.state.snippets.toast.isOpen = false;
+          /*this.setState({
+            ...this.state,
+            snippents: { ...this.state.snippets, toast: { isOpen: false } },
+          });*/
         }, 200);
         /*  this.setState({
           ...this.state,
@@ -402,15 +406,15 @@ export class ContextWrapper extends React.Component {
       this.setState({
         ...this.state,
         rightCollumn: update(this.state.rightCollumn, {
-          sections: { $splice: [[sectionIndex, 1]] }
-        })
+          sections: { $splice: [[sectionIndex, 1]] },
+        }),
       });
     } else {
       this.setState({
         ...this.state,
         leftCollumn: update(this.state.leftCollumn, {
-          sections: { $splice: [[sectionIndex, 1]] }
-        })
+          sections: { $splice: [[sectionIndex, 1]] },
+        }),
       });
     }
   };
@@ -423,18 +427,18 @@ export class ContextWrapper extends React.Component {
           toast: {
             isOpen: true,
             content: "new block has been added",
-            type: "SUCCESS"
-          }
+            type: "SUCCESS",
+          },
         },
         rightCollumn: update(this.state.rightCollumn, {
           sections: {
             [sectionIndex]: {
               blocks: {
-                $push: [instance]
-              }
-            }
-          }
-        })
+                $push: [instance],
+              },
+            },
+          },
+        }),
       });
     } else {
       this.setState({
@@ -443,18 +447,18 @@ export class ContextWrapper extends React.Component {
           toast: {
             isOpen: true,
             content: "new block has been added",
-            type: "SUCCESS"
-          }
+            type: "SUCCESS",
+          },
         },
         leftCollumn: update(this.state.leftCollumn, {
           sections: {
             [sectionIndex]: {
               blocks: {
-                $push: [instance]
-              }
-            }
-          }
-        })
+                $push: [instance],
+              },
+            },
+          },
+        }),
       });
     }
     setTimeout(() => {
@@ -467,18 +471,18 @@ export class ContextWrapper extends React.Component {
         ...this.state,
         rightCollumn: update(this.state.rightCollumn, {
           sections: {
-            [sectionIndex]: { blocks: { $splice: [[blockIndex, 1]] } }
-          }
-        })
+            [sectionIndex]: { blocks: { $splice: [[blockIndex, 1]] } },
+          },
+        }),
       });
     } else {
       this.setState({
         ...this.state,
         leftCollumn: update(this.state.leftCollumn, {
           sections: {
-            [sectionIndex]: { blocks: { $splice: [[blockIndex, 1]] } }
-          }
-        })
+            [sectionIndex]: { blocks: { $splice: [[blockIndex, 1]] } },
+          },
+        }),
       });
     }
   };
@@ -490,12 +494,12 @@ export class ContextWrapper extends React.Component {
     if (this.state.sidedrawer.isOpen === false) return;
     this.setState({ sidedrawer: { isOpen: false } });
   };
-  setFocuse = el => {
+  setFocuse = (el) => {
     this.setState({ focusedElement: el });
   };
   Off_GlobalDrag = () => {
     this.setState({
-      snippents: { globalDrag: { isOn: false, targetID: null } }
+      snippents: { globalDrag: { isOn: false, targetID: null } },
     });
   };
   /**
@@ -506,14 +510,14 @@ export class ContextWrapper extends React.Component {
       <Contextulize.Provider
         value={{
           state: this.state,
-          editHeader: text => this.edit_header(text),
-          editSummary: text => this.edit_summary(text),
-          onDragStart: e => this.onDragStart(e),
-          onDragEnd: e => this.onDragEnd(e),
-          setfocus: e => this.setFocuse(e),
+          editHeader: (text) => this.edit_header(text),
+          editSummary: (text) => this.edit_summary(text),
+          onDragStart: (e) => this.onDragStart(e),
+          onDragEnd: (e) => this.onDragEnd(e),
+          setfocus: (e) => this.setFocuse(e),
           changeSectionTitle: (cL, sI, nV) =>
             this.changeSectionTitle(cL, sI, nV),
-          setTargetBlock: blockstatus => this.setTargetBlock(blockstatus),
+          setTargetBlock: (blockstatus) => this.setTargetBlock(blockstatus),
           onEditBlock: (k, v) => this.onEdit_currentTargetBlock(k, v),
           openSideDrawer: () => this.open_sideDrawer(),
           closeSideDrawer: () => this.close_sideDrawer(),
@@ -523,9 +527,9 @@ export class ContextWrapper extends React.Component {
           deleteBlock: (c, sI, bI) => this.delete_block(c, sI, bI),
           openPreview: () => this.openPreView(),
           closePreview: () => this.closePreView(),
-          openDialog: obj => this.openDialog(obj),
+          openDialog: (obj) => this.openDialog(obj),
           closeDialog: () => this.closeDialog(),
-          Off_GlobalDrag: () => this.Off_GlobalDrag()
+          Off_GlobalDrag: () => this.Off_GlobalDrag(),
         }}
       >
         {this.props.children}
@@ -535,11 +539,7 @@ export class ContextWrapper extends React.Component {
   /**
    * @private {methods are denoted as '_'}
    */
-  _generateRandomID = () =>
-    "_" +
-    Math.random()
-      .toString(36)
-      .substr(2, 9);
+  _generateRandomID = () => "_" + Math.random().toString(36).substr(2, 9);
   _init_Section = (type, title) => {
     let instance = Object.assign({}, config.section);
     instance.id = this._generateRandomID();
@@ -557,7 +557,7 @@ export class ContextWrapper extends React.Component {
 
     return instance;
   };
-  _init_Block = type => {
+  _init_Block = (type) => {
     let instance;
     switch (type) {
       case block_types.main.Education:
@@ -565,7 +565,7 @@ export class ContextWrapper extends React.Component {
           {},
           {
             ...config.block.education,
-            id: this._generateRandomID()
+            id: this._generateRandomID(),
           }
         );
         break;
@@ -574,7 +574,7 @@ export class ContextWrapper extends React.Component {
           {},
           {
             ...config.block.work_history,
-            id: this._generateRandomID()
+            id: this._generateRandomID(),
           }
         );
         break;
@@ -595,7 +595,7 @@ export class ContextWrapper extends React.Component {
           {},
           {
             ...config.block.contact,
-            id: this._generateRandomID()
+            id: this._generateRandomID(),
           }
         );
       default:
@@ -603,19 +603,19 @@ export class ContextWrapper extends React.Component {
           {},
           {
             ...config.block.type,
-            id: this._generateRandomID()
+            id: this._generateRandomID(),
           }
         );
         break;
     }
     return instance;
   };
-  _update_blockIndex_of_targetBlock = index => {
+  _update_blockIndex_of_targetBlock = (index) => {
     if (this.state.targetBlock === null) return;
 
     return (this.state.targetBlock.blockIndex = index);
   };
-  _update_targetBlock = destination => {
+  _update_targetBlock = (destination) => {
     if (this.state.targetBlock === null) {
       return;
     } else {
@@ -631,13 +631,13 @@ export class ContextWrapper extends React.Component {
   };
   _blockSort = (sectionID, oldIndex, newIndex) => {
     let result = this.state.leftCollumn.sections.findIndex(
-      s => s.id === sectionID
+      (s) => s.id === sectionID
     );
     let newArray;
     switch (result) {
       case -1: {
         result = this.state.rightCollumn.sections.findIndex(
-          s => s.id === sectionID
+          (s) => s.id === sectionID
         );
         newArray = array_move(
           this.state.rightCollumn.sections[result].blocks,
@@ -650,11 +650,11 @@ export class ContextWrapper extends React.Component {
             sections: {
               [result]: {
                 blocks: {
-                  $set: newArray
-                }
-              }
-            }
-          })
+                  $set: newArray,
+                },
+              },
+            },
+          }),
         });
         break;
       }
@@ -670,11 +670,11 @@ export class ContextWrapper extends React.Component {
             sections: {
               [result]: {
                 blocks: {
-                  $set: newArray
-                }
-              }
-            }
-          })
+                  $set: newArray,
+                },
+              },
+            },
+          }),
         });
     }
   };
@@ -696,9 +696,9 @@ export class ContextWrapper extends React.Component {
           ...this.state,
           rightCollumn: update(this.state.rightCollumn, {
             sections: {
-              [sectionIndex]: { blocks: { [blockIndex]: { $set: fixedObj } } }
-            }
-          })
+              [sectionIndex]: { blocks: { [blockIndex]: { $set: fixedObj } } },
+            },
+          }),
         });
       }
     } else {
@@ -712,9 +712,9 @@ export class ContextWrapper extends React.Component {
           ...this.state,
           leftCollumn: update(this.state.leftCollumn, {
             sections: {
-              [sectionIndex]: { blocks: { [blockIndex]: { $set: fixedObj } } }
-            }
-          })
+              [sectionIndex]: { blocks: { [blockIndex]: { $set: fixedObj } } },
+            },
+          }),
         });
       }
     }
@@ -724,8 +724,8 @@ export class ContextWrapper extends React.Component {
     this.setState({
       ...this.state,
       snippets: {
-        toast: { isOpen: true, type: toastType, content: toastContent }
-      }
+        toast: { isOpen: true, type: toastType, content: toastContent },
+      },
     });
     setTimeout(() => {
       this.setState({ snippents: { toast: { isOpen: false } } });
@@ -738,32 +738,38 @@ export class ContextWrapper extends React.Component {
     duration
   ) => {
     this.setState({
-      snippets: { effect: { isOn: true, type: effectType, duration } }
+      ...this.state,
+      snippets: {
+        ...this.state.snippets,
+        effect: { isOn: true, type: effectType, duration },
+      },
     });
     setTimeout(() => {
       this.setState({
         snippets: {
+          ...this.state.snippets,
           effect: { isOn: false },
-          toast: { isOpen: true, type: toastType, content: toastContent }
-        }
+          toast: { isOpen: true, type: toastType, content: toastContent },
+        },
       });
       setTimeout(() => {
         this.setState({
           snippets: {
+            ...this.state.snippets,
             effect: { isOn: false },
-            toast: { isOpen: false }
-          }
+            toast: { isOpen: false },
+          },
         });
       }, duration + 10);
     }, duration);
   };
-  _isSectionAlreadyExists = type => {
-    let result = this.state.existing_section_types.findIndex(s => s === type);
+  _isSectionAlreadyExists = (type) => {
+    let result = this.state.existing_section_types.findIndex((s) => s === type);
     console.log(this.state.existing_section_types);
     console.log(result);
     if (result === -1) {
       this.setState({
-        existing_section_types: this.state.existing_section_types.concat(type)
+        existing_section_types: this.state.existing_section_types.concat(type),
       });
       return false;
     } else {
@@ -776,7 +782,7 @@ export function connect(Component) {
     render() {
       return (
         <Contextulize.Consumer>
-          {store => <Component {...this.props} context={store} />}
+          {(store) => <Component {...this.props} context={store} />}
         </Contextulize.Consumer>
       );
     }

@@ -10,7 +10,7 @@ class Page extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expand: true
+      expand: true,
     };
   }
   componentDidUpdate() {
@@ -24,13 +24,13 @@ class Page extends Component {
   // in most cases, it's enough to simply create and forget (thanks to timeout).
 
   styles = {
-    root: { display: "flex", flexDirection: "row", margin: "100px" }
+    root: { display: "flex", flexDirection: "row", margin: "100px" },
   };
   render() {
     return (
       <div
         style={{
-          backgroundImage: " linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
+          backgroundImage: " linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)",
         }}
       >
         <Header />
@@ -49,7 +49,9 @@ class Page extends Component {
             </div>
           </div>
         </Body>
-        <Footer> I am footer</Footer>
+        <Footer>
+          <div style={{ justifyItems: "center" }}>2020</div>
+        </Footer>
       </div>
     );
   }

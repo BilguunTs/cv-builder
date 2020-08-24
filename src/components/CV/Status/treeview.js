@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React from "react";
 import {
   Menu,
   MenuItem,
@@ -8,27 +8,27 @@ import {
   ButtonGroup,
   Divider,
   Popover,
-  Icon,
+  //Icon,
   PopoverInteractionKind,
   Classes,
   InputGroup,
-  FormGroup
+  FormGroup,
 } from "@blueprintjs/core";
 import { connect } from "../../../Context";
 import { RenderIcon } from "../../Icons/RenderIcon";
 import { SampleSectionButtons as SSB } from "../../../Context/config";
-import { Transition } from "react-transition-group";
-const Status = props => {
+//import { Transition } from "react-transition-group";
+const Status = (props) => {
   const {
     leftCollumn,
     rightCollumn,
-    existing_section_types
+    // existing_section_types
   } = props.context.state;
   const { createSection } = props.context;
   const { openPreview } = props.context;
   const [currentS, setCurrentS] = React.useState({ type: null, title: null });
   const titleRef = React.useRef({ value: "" });
-
+  const popRef = React.useRef();
   const [popoverProps, setPopover] = React.useState({
     boundary: "viewport",
     canEscapeKeyClose: true,
@@ -42,15 +42,16 @@ const Status = props => {
       arrow: { enabled: true },
       flip: { enabled: true },
       keepTogether: { enabled: true },
-      preventOverflow: { enabled: true }
+      preventOverflow: { enabled: true },
     },
     position: "auto",
     sliderValue: 5,
-    usePortal: true
+    usePortal: true,
   });
 
   const handleAddSection = () => {
     createSection(currentS.type, currentS.title, "R");
+    handleCancel();
   };
   const toggleCurrent = (type, title) => {
     setCurrentS({ type, title });
@@ -87,7 +88,7 @@ const Status = props => {
   };
   const handleCancel = () => {
     toggleCurrent(null, null);
-    setPopover({ isOpen: undefined });
+    setPopover({ isOpen: false });
   };
   const getContents = () => {
     return (
@@ -95,14 +96,14 @@ const Status = props => {
         style={{
           minWidth: "250px",
           height: "420px",
-          background: "lemonchiffon"
+          background: "lemonchiffon",
         }}
       >
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1fr",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           {SSB.map((b, i) => {
@@ -134,14 +135,13 @@ const Status = props => {
         <div>
           {currentS.type !== null ? (
             <div>
-              {" "}
               {renderSectionForm()}
               <div
                 style={{
                   position: "absolute",
                   bottom: "0",
                   right: "0",
-                  padding: "10px"
+                  padding: "10px",
                 }}
               >
                 <Button onClick={handleCancel} minimal>
@@ -162,14 +162,14 @@ const Status = props => {
       <Menu style={{ padding: "10px" }}>
         <h3>Resume Sections </h3>
         <MenuDivider />
-        {leftCollumn.sections.map(s => (
+        {leftCollumn.sections.map((s) => (
           <MenuItem
             icon={RenderIcon(s.type, 18, "#5C7080")}
             key={s.id}
             text={s.title}
           />
         ))}
-        {rightCollumn.sections.map(s => (
+        {rightCollumn.sections.map((s) => (
           <MenuItem
             icon={RenderIcon(s.type, 18, "#5C7080")}
             key={s.id}
@@ -179,15 +179,11 @@ const Status = props => {
         <MenuDivider />
         <div style={{ padding: "10px 0 10px 0" }}>
           <Popover
+            ref={popRef}
             portalClassName="foo"
             {...popoverProps}
             position="right"
-            enforceFocus={false}
-            isOpen={
-              popoverProps.isOpen === true
-                ? /* Controlled */ true
-                : /* Uncontrolled */ undefined
-            }
+            isOpen={popoverProps.isOpen ? true : undefined}
           >
             <Button
               fill
