@@ -21,7 +21,7 @@ const SimpleTemp = props => {
         alwaysRenderInput
         maxLength={39}
         defaultValue={props.state.heading || ""}
-        placeholder="👋 Your name ?"
+        placeholder="👋 Bilguun.Ts"
         onChange={handleChange}
       ></EditableText>
     </h1>
